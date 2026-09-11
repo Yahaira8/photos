@@ -1,6 +1,6 @@
 {
   "name": "Photos",
-  "description": "Blank repository.",
+  "description": "A nine photo photo grid with three rows and three columns.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
