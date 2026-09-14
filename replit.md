@@ -5,7 +5,7 @@ This is a React, TypeScript, and Vite web app.
 ## Run
 
 - Start the app with `npm run dev`.
-- The development server listens on `0.0.0.0:5000` for Replit Preview.
+- The development server listens on `0.0.0.0:3000` for Replit Preview.
 
 ## Build
 
