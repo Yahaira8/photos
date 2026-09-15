@@ -5,7 +5,7 @@ export function App() {
     { id: 3, title: 'Rudis JB1 Wrestling Shoes', url: '/images/rudis-jb1-flamingo-pink.jpg' },
     { id: 4, title: 'Placeholder Photo 4', url: 'https://picsum.photos/seed/photo4/600/600' },
     { id: 5, title: 'Nike Elite Tournament', url: '/images/nike-elite-tournament.png' },
-    { id: 6, title: 'Placeholder Photo 6', url: 'https://picsum.photos/seed/photo6/600/600' },
+    { id: 6, title: 'Rudis Colt 4.0 Wrestling Shoes', url: '/images/rudis-colt-4-neon-cereal-milk.jpg' },
     { id: 7, title: "Women's Wrestling", url: '/images/womens-wrestling.png' },
     { id: 8, title: 'Placeholder Photo 8', url: 'https://picsum.photos/seed/photo8/600/600' },
     { id: 9, title: 'Intramural Flag Football', url: '/images/intramural-flag-football.webp' },
