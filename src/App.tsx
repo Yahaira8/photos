@@ -6,9 +6,9 @@ export function App() {
     { id: 4, title: 'Placeholder Photo 4', url: 'https://picsum.photos/seed/photo4/600/600' },
     { id: 5, title: 'Nike Elite Tournament', url: '/images/nike-elite-tournament.png' },
     { id: 6, title: 'Placeholder Photo 6', url: 'https://picsum.photos/seed/photo6/600/600' },
-    { id: 7, title: 'Placeholder Photo 7', url: 'https://picsum.photos/seed/photo7/600/600' },
+    { id: 7, title: "Women's Wrestling", url: '/images/womens-wrestling.png' },
     { id: 8, title: 'Placeholder Photo 8', url: 'https://picsum.photos/seed/photo8/600/600' },
-    { id: 9, title: 'Placeholder Photo 9', url: 'https://picsum.photos/seed/photo9/600/600' },
+    { id: 9, title: 'Intramural Flag Football', url: '/images/intramural-flag-football.webp' },
   ];
 
   return (
