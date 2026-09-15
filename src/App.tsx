@@ -2,7 +2,7 @@ export function App() {
   const photos = [
     { id: 1, title: 'Volleyball', url: '/images/volleyball.jpeg' },
     { id: 2, title: 'Olivia Babcock', url: '/images/olivia-babcock-volleyball.jpg' },
-    { id: 3, title: 'Placeholder Photo 3', url: 'https://picsum.photos/seed/photo3/600/600' },
+    { id: 3, title: 'Rudis JB1 Wrestling Shoes', url: '/images/rudis-jb1-flamingo-pink.jpg' },
     { id: 4, title: 'Placeholder Photo 4', url: 'https://picsum.photos/seed/photo4/600/600' },
     { id: 5, title: 'Nike Elite Tournament', url: '/images/nike-elite-tournament.png' },
     { id: 6, title: 'Placeholder Photo 6', url: 'https://picsum.photos/seed/photo6/600/600' },
