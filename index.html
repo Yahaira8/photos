@@ -40,6 +40,13 @@
         grid-template-rows: repeat(3, 1fr);
         gap: 1.25rem;
         width: 100%;
+        background-image: url('/images/background.jpg');
+        background-size: 100% 100%;
+        background-position: center;
+        background-repeat: no-repeat;
+        padding: 1.5rem;
+        border-radius: 1rem;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
       }
       .photo-card {
         background-color: #ffffff;
@@ -70,6 +77,7 @@
       @media (max-width: 640px) {
         .photo-grid {
           gap: 0.75rem;
+          padding: 0.75rem;
         }
         .page-title {
           font-size: 1.25rem;
