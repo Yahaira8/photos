@@ -26,6 +26,26 @@ export function App() {
     return null;
   });
 
+  // Custom dog cursor state (paw or bone)
+  const [cursorMode, setCursorMode] = useState<'paw' | 'bone'>(() => {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('dog_cursor_mode');
+      if (saved === 'paw' || saved === 'bone') return saved;
+    }
+    return 'paw';
+  });
+
+  // Keep body class and local storage in sync with active cursor
+  useEffect(() => {
+    document.body.classList.remove('dog-cursor-paw', 'dog-cursor-bone');
+    document.body.classList.add(`dog-cursor-${cursorMode}`);
+    try {
+      localStorage.setItem('dog_cursor_mode', cursorMode);
+    } catch {
+      // ignore storage access errors
+    }
+  }, [cursorMode]);
+
   // Listen to popstate for browser Back/Forward buttons
   useEffect(() => {
     function handlePopState() {
@@ -104,6 +124,40 @@ export function App() {
           >
             <span>🐾 Paws & Friends</span>
           </button>
+
+          {/* Custom Dog Cursor Switcher */}
+          <div
+            className="cursor-selector-pill"
+            id="custom-dog-cursor-selector"
+            role="radiogroup"
+            aria-label="Custom Dog Cursor Mode"
+          >
+            <span className="cursor-selector-label">Cursor:</span>
+            <button
+              type="button"
+              className={`cursor-option-btn ${cursorMode === 'paw' ? 'active' : ''}`}
+              id="cursor-mode-paw-btn"
+              onClick={() => setCursorMode('paw')}
+              title="Cute Paw Print Mouse Cursor"
+              aria-checked={cursorMode === 'paw'}
+              role="radio"
+            >
+              <span className="cursor-icon-emoji">🐾</span>
+              <span>Paw</span>
+            </button>
+            <button
+              type="button"
+              className={`cursor-option-btn ${cursorMode === 'bone' ? 'active' : ''}`}
+              id="cursor-mode-bone-btn"
+              onClick={() => setCursorMode('bone')}
+              title="Cute Dog Bone Mouse Cursor"
+              aria-checked={cursorMode === 'bone'}
+              role="radio"
+            >
+              <span className="cursor-icon-emoji">🦴</span>
+              <span>Bone</span>
+            </button>
+          </div>
         </div>
 
         <div className="top-right-search" id="top-right-search">

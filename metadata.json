@@ -1,6 +1,6 @@
 {
   "name": "Photos",
-  "description": "A cute dog-themed photo gallery with 9 breeds, interactive popup cards showing dog personality traits, favorite snacks and quirks, top-right breed search, Dog of the Month, and canine care tips.",
+  "description": "A cute dog-themed photo gallery with custom paw print and dog bone mouse cursors, 9 breeds, interactive popup cards with personality traits and favorite snacks, top-right breed search, Dog of the Month, and care tips.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
