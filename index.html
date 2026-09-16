@@ -4,9 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Photos</title>
-    <meta name="description" content="A nine photo photo grid with three rows and three columns." />
+    <meta name="description" content="A cute dog-themed photo gallery with 9 breeds, interactive popup cards showing dog personality traits, favorite snacks and quirks, top-right breed search, Dog of the Month, and canine care tips." />
     <meta property="og:title" content="Photos" />
-    <meta property="og:description" content="A nine photo photo grid with three rows and three columns." />
+    <meta property="og:description" content="A cute dog-themed photo gallery with 9 breeds, interactive popup cards showing dog personality traits, favorite snacks and quirks, top-right breed search, Dog of the Month, and canine care tips." />
     <style>
       * {
         box-sizing: border-box;
@@ -15,10 +15,14 @@
       }
       body {
         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        background-color: #f8fafc;
-        color: #0f172a;
+        background-color: #fffaf5;
+        background-image: url('/images/dog-paws-bg.svg');
+        background-size: 180px 180px;
+        background-repeat: repeat;
+        background-attachment: fixed;
+        color: #382c23;
         min-height: 100vh;
-        padding: 2rem 1rem;
+        padding: 2.25rem 1rem;
       }
       .page-container {
         max-width: 960px;
@@ -27,12 +31,36 @@
       .page-header {
         text-align: center;
         margin-bottom: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .cute-dog-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        background-color: #fff0e3;
+        border: 1px solid #edd5c2;
+        color: #925830;
+        font-size: 0.8125rem;
+        font-weight: 600;
+        padding: 0.35rem 0.875rem;
+        border-radius: 9999px;
+        margin-bottom: 0.75rem;
+        box-shadow: 0 1px 3px rgba(140, 90, 50, 0.06);
       }
       .page-title {
-        font-size: 1.75rem;
-        font-weight: 600;
+        font-size: 2rem;
+        font-weight: 700;
         letter-spacing: -0.025em;
-        color: #0f172a;
+        color: #382c23;
+      }
+      .page-subtitle {
+        font-size: 0.9375rem;
+        color: #786252;
+        margin-top: 0.5rem;
+        max-width: 580px;
+        line-height: 1.5;
       }
       .photo-grid {
         display: grid;
@@ -40,47 +68,77 @@
         grid-template-rows: repeat(3, 1fr);
         gap: 1.25rem;
         width: 100%;
-        background-image: url('/images/background.jpg');
-        background-size: 100% 100%;
+        background-color: #fff4eb;
+        background-image: url('/images/dog-paws-bg.svg');
+        background-size: 140px 140px;
         background-position: center;
-        background-repeat: no-repeat;
+        background-repeat: repeat;
         padding: 1.5rem;
-        border-radius: 1rem;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        border-radius: 1.25rem;
+        border: 2px solid #ecd8c7;
+        box-shadow: 0 8px 28px rgba(160, 115, 80, 0.12);
       }
       .photo-card {
         background-color: #ffffff;
-        border-radius: 0.75rem;
+        border-radius: 0.875rem;
         overflow: hidden;
-        border: 1px solid #e2e8f0;
-        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+        border: 1px solid #eedecf;
+        box-shadow: 0 2px 5px rgba(140, 95, 65, 0.06);
         display: flex;
         flex-direction: column;
+        cursor: pointer;
+        transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+        text-decoration: none;
+        color: inherit;
+      }
+      .photo-card:hover {
+        transform: translateY(-3px);
+        border-color: #dcbfa9;
+        box-shadow: 0 10px 22px -4px rgba(140, 95, 65, 0.16);
+      }
+      .photo-img-wrapper {
+        position: relative;
+        width: 100%;
+        aspect-ratio: 1 / 1;
+        overflow: hidden;
+        background-color: #f7ebe0;
       }
       .photo-img {
         width: 100%;
+        height: 100%;
         aspect-ratio: 1 / 1;
         object-fit: cover;
         display: block;
-        background-color: #e2e8f0;
+        transition: transform 0.3s ease;
+      }
+      .photo-card:hover .photo-img {
+        transform: scale(1.03);
+      }
+      .photo-title-container {
+        padding: 0.75rem 0.5rem;
+        background-color: #ffffff;
       }
       .photo-title {
-        padding: 0.75rem 0.5rem;
         font-size: 0.875rem;
-        font-weight: 500;
+        font-weight: 600;
         text-align: center;
-        color: #334155;
+        color: #433327;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
       }
       @media (max-width: 640px) {
+        body {
+          padding: 1.25rem 0.75rem;
+          background-size: 140px 140px;
+        }
         .photo-grid {
           gap: 0.75rem;
           padding: 0.75rem;
+          background-size: 110px 110px;
         }
         .page-title {
-          font-size: 1.25rem;
+          font-size: 1.45rem;
         }
         .photo-title {
           font-size: 0.75rem;
@@ -93,53 +151,93 @@
     <div id="root">
       <main class="page-container" id="photo-gallery-main">
         <header class="page-header" id="photo-gallery-header">
-          <h1 class="page-title">Photo Gallery</h1>
+          <div class="cute-dog-badge" id="dog-theme-badge">
+            <span>🐾 Paws & Friends</span>
+          </div>
+          <h1 class="page-title" id="photo-gallery-title">Pawsome Photo Gallery</h1>
+          <p class="page-subtitle" id="photo-gallery-subtitle">A cute collection of our favorite moments and companions. Click on any photo to see more details!</p>
         </header>
 
         <section class="photo-grid" id="photo-grid">
           <article class="photo-card" id="photo-card-1">
-            <img class="photo-img" src="/images/volleyball.jpeg" alt="Volleyball" loading="lazy" />
-            <h2 class="photo-title">Volleyball</h2>
+            <div class="photo-img-wrapper">
+              <img class="photo-img" src="/images/dog-golden-retriever.jpg" alt="Golden Retriever" loading="lazy" />
+            </div>
+            <div class="photo-title-container">
+              <h2 class="photo-title">Golden Retriever</h2>
+            </div>
           </article>
 
           <article class="photo-card" id="photo-card-2">
-            <img class="photo-img" src="/images/olivia-babcock-volleyball.jpg" alt="Olivia Babcock" loading="lazy" />
-            <h2 class="photo-title">Olivia Babcock</h2>
+            <div class="photo-img-wrapper">
+              <img class="photo-img" src="/images/dog-pembroke-corgi.jpg" alt="Pembroke Welsh Corgi" loading="lazy" />
+            </div>
+            <div class="photo-title-container">
+              <h2 class="photo-title">Pembroke Welsh Corgi</h2>
+            </div>
           </article>
 
           <article class="photo-card" id="photo-card-3">
-            <img class="photo-img" src="/images/rudis-jb1-flamingo-pink.jpg" alt="Rudis JB1 Wrestling Shoes" loading="lazy" />
-            <h2 class="photo-title">Rudis JB1 Wrestling Shoes</h2>
+            <div class="photo-img-wrapper">
+              <img class="photo-img" src="/images/dog-siberian-husky.jpg" alt="Siberian Husky" loading="lazy" />
+            </div>
+            <div class="photo-title-container">
+              <h2 class="photo-title">Siberian Husky</h2>
+            </div>
           </article>
 
           <article class="photo-card" id="photo-card-4">
-            <img class="photo-img" src="https://picsum.photos/seed/photo4/600/600" alt="Placeholder Photo 4" loading="lazy" />
-            <h2 class="photo-title">Placeholder Photo 4</h2>
+            <div class="photo-img-wrapper">
+              <img class="photo-img" src="/images/dog-french-bulldog.jpg" alt="French Bulldog" loading="lazy" />
+            </div>
+            <div class="photo-title-container">
+              <h2 class="photo-title">French Bulldog</h2>
+            </div>
           </article>
 
           <article class="photo-card" id="photo-card-5">
-            <img class="photo-img" src="/images/nike-elite-tournament.png" alt="Nike Elite Tournament" loading="lazy" />
-            <h2 class="photo-title">Nike Elite Tournament</h2>
+            <div class="photo-img-wrapper">
+              <img class="photo-img" src="/images/dog-beagle.jpg" alt="Beagle" loading="lazy" />
+            </div>
+            <div class="photo-title-container">
+              <h2 class="photo-title">Beagle</h2>
+            </div>
           </article>
 
           <article class="photo-card" id="photo-card-6">
-            <img class="photo-img" src="/images/rudis-colt-4-neon-cereal-milk.jpg" alt="Rudis Colt 4.0 Wrestling Shoes" loading="lazy" />
-            <h2 class="photo-title">Rudis Colt 4.0 Wrestling Shoes</h2>
+            <div class="photo-img-wrapper">
+              <img class="photo-img" src="/images/dog-shiba-inu.jpg" alt="Shiba Inu" loading="lazy" />
+            </div>
+            <div class="photo-title-container">
+              <h2 class="photo-title">Shiba Inu</h2>
+            </div>
           </article>
 
           <article class="photo-card" id="photo-card-7">
-            <img class="photo-img" src="/images/womens-wrestling.png" alt="Women's Wrestling" loading="lazy" />
-            <h2 class="photo-title">Women's Wrestling</h2>
+            <div class="photo-img-wrapper">
+              <img class="photo-img" src="/images/dog-samoyed.jpg" alt="Samoyed" loading="lazy" />
+            </div>
+            <div class="photo-title-container">
+              <h2 class="photo-title">Samoyed</h2>
+            </div>
           </article>
 
           <article class="photo-card" id="photo-card-8">
-            <img class="photo-img" src="https://picsum.photos/seed/photo8/600/600" alt="Placeholder Photo 8" loading="lazy" />
-            <h2 class="photo-title">Placeholder Photo 8</h2>
+            <div class="photo-img-wrapper">
+              <img class="photo-img" src="/images/dog-dachshund.jpg" alt="Dachshund" loading="lazy" />
+            </div>
+            <div class="photo-title-container">
+              <h2 class="photo-title">Dachshund</h2>
+            </div>
           </article>
 
           <article class="photo-card" id="photo-card-9">
-            <img class="photo-img" src="/images/intramural-flag-football.webp" alt="Intramural Flag Football" loading="lazy" />
-            <h2 class="photo-title">Intramural Flag Football</h2>
+            <div class="photo-img-wrapper">
+              <img class="photo-img" src="/images/dog-pug.jpg" alt="Pug" loading="lazy" />
+            </div>
+            <div class="photo-title-container">
+              <h2 class="photo-title">Pug</h2>
+            </div>
           </article>
         </section>
       </main>

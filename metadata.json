@@ -1,6 +1,6 @@
 {
   "name": "Photos",
-  "description": "A nine photo photo grid with three rows and three columns.",
+  "description": "A cute dog-themed photo gallery with 9 breeds, interactive popup cards showing dog personality traits, favorite snacks and quirks, top-right breed search, Dog of the Month, and canine care tips.",
   "requestFramePermissions": [],
   "majorCapabilities": [
     "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"

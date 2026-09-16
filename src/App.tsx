@@ -1,35 +1,196 @@
+import { useState, useEffect } from 'react';
+import { photos, dogOfTheMonth, funFacts, careTips, dogQuotes } from './data';
+import { Photo } from './types';
+import { PhotoCard } from './components/PhotoCard';
+import { PhotoDetail } from './components/PhotoDetail';
+import { SearchBar } from './components/SearchBar';
+import { DogFeaturesSection } from './components/DogFeaturesSection';
+
 export function App() {
-  const photos = [
-    { id: 1, title: 'Volleyball', url: '/images/volleyball.jpeg' },
-    { id: 2, title: 'Olivia Babcock', url: '/images/olivia-babcock-volleyball.jpg' },
-    { id: 3, title: 'Rudis JB1 Wrestling Shoes', url: '/images/rudis-jb1-flamingo-pink.jpg' },
-    { id: 4, title: 'Placeholder Photo 4', url: 'https://picsum.photos/seed/photo4/600/600' },
-    { id: 5, title: 'Nike Elite Tournament', url: '/images/nike-elite-tournament.png' },
-    { id: 6, title: 'Rudis Colt 4.0 Wrestling Shoes', url: '/images/rudis-colt-4-neon-cereal-milk.jpg' },
-    { id: 7, title: "Women's Wrestling", url: '/images/womens-wrestling.png' },
-    { id: 8, title: 'Placeholder Photo 8', url: 'https://picsum.photos/seed/photo8/600/600' },
-    { id: 9, title: 'Intramural Flag Football', url: '/images/intramural-flag-football.webp' },
-  ];
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedPhotoId, setSelectedPhotoId] = useState<number | null>(() => {
+    // Check initial URL hash or query param on load
+    if (typeof window !== 'undefined') {
+      const hashMatch = window.location.hash.match(/photo-(\d+)/);
+      if (hashMatch) {
+        const id = parseInt(hashMatch[1], 10);
+        if (photos.some((p) => p.id === id)) return id;
+      }
+      const params = new URLSearchParams(window.location.search);
+      const queryId = params.get('photo') || params.get('id');
+      if (queryId) {
+        const id = parseInt(queryId, 10);
+        if (photos.some((p) => p.id === id)) return id;
+      }
+    }
+    return null;
+  });
+
+  // Listen to popstate for browser Back/Forward buttons
+  useEffect(() => {
+    function handlePopState() {
+      const hashMatch = window.location.hash.match(/photo-(\d+)/);
+      if (hashMatch) {
+        const id = parseInt(hashMatch[1], 10);
+        setSelectedPhotoId(photos.some((p) => p.id === id) ? id : null);
+      } else {
+        setSelectedPhotoId(null);
+      }
+    }
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const selectedIndex = photos.findIndex((p) => p.id === selectedPhotoId);
+  const selectedPhoto = selectedIndex !== -1 ? photos[selectedIndex] : null;
+
+  function handleSelectPhoto(photo: Photo) {
+    setSelectedPhotoId(photo.id);
+    if (typeof window !== 'undefined') {
+      window.history.pushState(null, '', `#photo-${photo.id}`);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
+
+  function handleBack() {
+    setSelectedPhotoId(null);
+    if (typeof window !== 'undefined') {
+      window.history.pushState(null, '', window.location.pathname);
+    }
+  }
+
+  function handlePrev() {
+    if (selectedIndex === -1) return;
+    const prevIndex = (selectedIndex - 1 + photos.length) % photos.length;
+    const prevPhoto = photos[prevIndex];
+    setSelectedPhotoId(prevPhoto.id);
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, '', `#photo-${prevPhoto.id}`);
+    }
+  }
+
+  function handleNext() {
+    if (selectedIndex === -1) return;
+    const nextIndex = (selectedIndex + 1) % photos.length;
+    const nextPhoto = photos[nextIndex];
+    setSelectedPhotoId(nextPhoto.id);
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, '', `#photo-${nextPhoto.id}`);
+    }
+  }
+
+  // Filter photos for the main grid if a search query is active
+  const trimmedQuery = searchQuery.trim().toLowerCase();
+  const displayedPhotos = trimmedQuery
+    ? photos.filter(
+        (photo) =>
+          photo.title.toLowerCase().includes(trimmedQuery) ||
+          photo.category.toLowerCase().includes(trimmedQuery) ||
+          photo.description.toLowerCase().includes(trimmedQuery)
+      )
+    : photos;
 
   return (
     <main className="page-container" id="photo-gallery-main">
-      <header className="page-header" id="photo-gallery-header">
-        <h1 className="page-title">Photo Gallery</h1>
+      {/* Top Bar with brand on the left and search bar at top right */}
+      <header className="page-top-bar" id="page-top-bar">
+        <div className="top-brand">
+          <button
+            type="button"
+            className="cute-dog-badge"
+            id="dog-theme-badge"
+            onClick={selectedPhoto ? handleBack : undefined}
+            title={selectedPhoto ? '← Back to all dogs' : undefined}
+          >
+            <span>🐾 Paws & Friends</span>
+          </button>
+        </div>
+
+        <div className="top-right-search" id="top-right-search">
+          <SearchBar
+            searchQuery={searchQuery}
+            onSearchChange={setSearchQuery}
+            onSelectDog={handleSelectPhoto}
+            allPhotos={photos}
+          />
+        </div>
       </header>
 
-      <section className="photo-grid" id="photo-grid">
-        {photos.map((photo) => (
-          <article className="photo-card" id={`photo-card-${photo.id}`} key={photo.id}>
-            <img
-              className="photo-img"
-              src={photo.url}
-              alt={photo.title}
-              loading="lazy"
-            />
-            <h2 className="photo-title">{photo.title}</h2>
-          </article>
-        ))}
+      <section className="page-header" id="photo-gallery-header">
+        <h1 className="page-title" id="photo-gallery-title">
+          Pawsome Photo Gallery
+        </h1>
+        <p className="page-subtitle" id="photo-gallery-subtitle">
+          A cute collection of our favorite dog breeds. Click on any photo to open a cute card with their personality traits, favorite snacks, and quirks!
+        </p>
+
+        {trimmedQuery && (
+          <div className="search-status-bar" id="search-status-bar">
+            <span className="search-status-text">
+              Showing <strong>{displayedPhotos.length}</strong> of {photos.length} dogs matching "{searchQuery}"
+            </span>
+            <button
+              type="button"
+              className="search-reset-btn"
+              id="search-reset-btn"
+              onClick={() => setSearchQuery('')}
+            >
+              Clear Filter
+            </button>
+          </div>
+        )}
       </section>
+
+      {displayedPhotos.length > 0 ? (
+        <section className="photo-grid" id="photo-grid" aria-label="Photo Grid">
+          {displayedPhotos.map((photo) => (
+            <PhotoCard
+              key={photo.id}
+              photo={photo}
+              onSelect={handleSelectPhoto}
+            />
+          ))}
+        </section>
+      ) : (
+        <div className="photo-grid-empty" id="photo-grid-empty">
+          <span className="empty-paw-icon">🐾</span>
+          <h2 className="empty-title">No dogs found</h2>
+          <p className="empty-desc">
+            We couldn't find any dogs matching "<strong>{searchQuery}</strong>". Try searching for Corgi, Husky, Retriever, or Beagle.
+          </p>
+          <button
+            type="button"
+            className="clear-search-action-btn"
+            id="clear-search-action-btn"
+            onClick={() => setSearchQuery('')}
+          >
+            View All 9 Dogs
+          </button>
+        </div>
+      )}
+
+      {/* Dog of the Month, Fun Facts, Care Tips & Quotes */}
+      <DogFeaturesSection
+        dogOfTheMonth={dogOfTheMonth}
+        funFacts={funFacts}
+        careTips={careTips}
+        dogQuotes={dogQuotes}
+        photos={photos}
+        onSelectPhoto={handleSelectPhoto}
+      />
+
+      {/* Cute Popup Card Modal when clicking a photo in the gallery */}
+      {selectedPhoto && (
+        <PhotoDetail
+          photo={selectedPhoto}
+          currentIndex={selectedIndex}
+          totalPhotos={photos.length}
+          onBack={handleBack}
+          onPrev={handlePrev}
+          onNext={handleNext}
+        />
+      )}
     </main>
   );
 }
+

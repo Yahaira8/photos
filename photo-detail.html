@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Photo Details - Focus View</title>
+    <meta name="description" content="A simple, visually appealing image focus page displaying an image with centered title, caption, and navigation." />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #fffaf5;
+        background-image: url('/images/dog-paws-bg.svg');
+        background-size: 180px 180px;
+        background-repeat: repeat;
+        background-attachment: fixed;
+        color: #382c23;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 2.5rem 1.25rem;
+      }
+      .detail-card {
+        background-color: #ffffff;
+        border-radius: 1.25rem;
+        border: 1px solid #ebd8c8;
+        box-shadow: 0 12px 32px -6px rgba(140, 95, 65, 0.12), 0 8px 10px -6px rgba(140, 95, 65, 0.04);
+        width: 100%;
+        max-width: 680px;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2.25rem 2rem;
+      }
+      .top-nav {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.25rem;
+      }
+      .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        color: #5c4738;
+        text-decoration: none;
+        font-size: 0.875rem;
+        font-weight: 600;
+        padding: 0.5rem 1rem;
+        border-radius: 9999px;
+        background-color: #fff4ea;
+        border: 1px solid #eed8c7;
+        transition: all 0.2s ease;
+      }
+      .back-link:hover {
+        background-color: #ffe9d8;
+        color: #382c23;
+        border-color: #e2c4ae;
+      }
+      .detail-badge {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #835637;
+        background-color: #fff6ee;
+        border: 1px solid #edd7c6;
+        padding: 0.35rem 0.75rem;
+        border-radius: 9999px;
+      }
+      .detail-title {
+        font-size: 1.75rem;
+        font-weight: 700;
+        letter-spacing: -0.025em;
+        color: #382c23;
+        text-align: center;
+        margin-bottom: 1.5rem;
+        line-height: 1.25;
+        max-width: 90%;
+      }
+      .image-container {
+        width: 100%;
+        max-width: 580px;
+        aspect-ratio: 4 / 3;
+        border-radius: 0.875rem;
+        overflow: hidden;
+        background-color: #f7ebe0;
+        border: 1px solid #edd6c4;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+      }
+      .main-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+        transition: transform 0.3s ease;
+      }
+      .image-container:hover .main-image {
+        transform: scale(1.02);
+      }
+      .detail-caption {
+        font-size: 1rem;
+        line-height: 1.65;
+        color: #5d4a3c;
+        text-align: center;
+        max-width: 560px;
+        margin-bottom: 1.75rem;
+      }
+      .footer-nav {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        border-top: 1px solid #f6ebe1;
+        padding-top: 1.5rem;
+      }
+      .home-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        background-color: #4e3a2c;
+        color: #ffffff;
+        font-size: 0.875rem;
+        font-weight: 600;
+        padding: 0.625rem 1.5rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        transition: background-color 0.2s ease;
+      }
+      .home-button:hover {
+        background-color: #3a2a1e;
+      }
+      @media (max-width: 640px) {
+        body {
+          padding: 1.25rem 0.75rem;
+        }
+        .detail-card {
+          padding: 1.25rem 1rem;
+        }
+        .detail-title {
+          font-size: 1.35rem;
+          margin-bottom: 1.125rem;
+        }
+        .image-container {
+          aspect-ratio: 1 / 1;
+          margin-bottom: 1.125rem;
+        }
+        .detail-caption {
+          font-size: 0.9375rem;
+          line-height: 1.55;
+          margin-bottom: 1.25rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="detail-card" id="photo-focus-container">
+      <nav class="top-nav" aria-label="Breadcrumb navigation">
+        <a href="/" class="back-link" id="back-link">← Back to Gallery</a>
+        <span class="detail-badge" id="photo-category">Featured Image</span>
+      </nav>
+
+      <!-- Centered title above the image -->
+      <h1 class="detail-title" id="photo-title">Example Focus Title</h1>
+
+      <!-- The image itself, properly sized and responsive -->
+      <figure class="image-container" id="photo-image-container">
+        <img
+          class="main-image"
+          id="photo-image"
+          src="example-image.jpg"
+          alt="Focused view of example image"
+        />
+      </figure>
+
+      <!-- Short description or caption below the image -->
+      <p class="detail-caption" id="photo-caption">
+        This is a placeholder caption providing detailed information and context about the selected photo. On the main gallery page, clicking any photo instantly brings up its custom description, athlete details, and gear specifications.
+      </p>
+
+      <!-- Button/link to navigate back to homepage -->
+      <div class="footer-nav">
+        <a href="/" class="home-button" id="return-home-button">Return to Homepage</a>
+      </div>
+    </main>
+
+    <script>
+      const dogData = {
+        '1': {
+          title: 'Golden Retriever',
+          src: '/images/dog-golden-retriever.jpg',
+          category: 'Sporting Group',
+          caption: 'Known for their friendly, gentle temperament and radiant golden coats, Golden Retrievers are intelligent, devoted companions that excel as family pets, therapy dogs, and joyful outdoor adventure partners.'
+        },
+        '2': {
+          title: 'Pembroke Welsh Corgi',
+          src: '/images/dog-pembroke-corgi.jpg',
+          category: 'Herding Group',
+          caption: 'With their signature upright ears, cheerful smiles, and sturdy low-set bodies, Pembroke Welsh Corgis are affectionate, high-spirited, and remarkably bright dogs originally bred in Wales to herd livestock.'
+        },
+        '3': {
+          title: 'Siberian Husky',
+          src: '/images/dog-siberian-husky.jpg',
+          category: 'Working Group',
+          caption: 'Celebrated for their striking arctic beauty, piercing eyes, and boundless stamina, Siberian Huskies are vocal, athletic pack animals built for long-distance cold-weather sled expeditions.'
+        },
+        '4': {
+          title: 'French Bulldog',
+          src: '/images/dog-french-bulldog.jpg',
+          category: 'Non-Sporting Group',
+          caption: 'Featuring distinctive bat-shaped ears, compact muscular builds, and irresistible wrinkled snouts, Frenchies are affectionate, comical housemates that thrive on companionship and cozy cuddles.'
+        },
+        '5': {
+          title: 'Beagle',
+          src: '/images/dog-beagle.jpg',
+          category: 'Hound Group',
+          caption: 'With soulful hazel eyes and legendary scent-tracking prowess, Beagles are gentle, merry hounds adored for their curious nature, loyal pack loyalty, and happy tail-wags.'
+        },
+        '6': {
+          title: 'Shiba Inu',
+          src: '/images/dog-shiba-inu.jpg',
+          category: 'Non-Sporting Group',
+          caption: 'An ancient Japanese breed famed for spirited independence, plush golden coats, and fox-like attentiveness. Shibas are fastidious, clever, and deeply devoted to their trusted humans.'
+        },
+        '7': {
+          title: 'Samoyed',
+          src: '/images/dog-samoyed.jpg',
+          category: 'Working Group',
+          caption: 'Nicknamed the "Smiling Sammy" for their perpetually cheerful upturned lips and brilliant white cloud-like coats, Samoyeds are gentle, warm-hearted northern working dogs that adore people of all ages.'
+        },
+        '8': {
+          title: 'Dachshund',
+          src: '/images/dog-dachshund.jpg',
+          category: 'Hound Group',
+          caption: 'Affectionately known as "wiener dogs" for their iconic long silhouettes and short legs, Dachshunds are spunky, fearless hounds packed with big personality and tenacious curiosity.'
+        },
+        '9': {
+          title: 'Pug',
+          src: '/images/dog-pug.jpg',
+          category: 'Toy Group',
+          caption: 'Embodying their ancient motto "multum in parvo" (a lot in a little), Pugs are wrinkly-faced charmers known for playful comedic antics, expressive eyes, and immense loyalty.'
+        }
+      };
+
+      // Support dynamic population if query params are present (e.g. ?id=1 or ?title=...)
+      const params = new URLSearchParams(window.location.search);
+      const idParam = params.get('id');
+      const fallbackDog = idParam && dogData[idParam] ? dogData[idParam] : dogData['1'];
+
+      const titleParam = params.get('title') || (idParam ? fallbackDog.title : null);
+      const srcParam = params.get('src') || (idParam ? fallbackDog.src : null);
+      const captionParam = params.get('caption') || params.get('desc') || (idParam ? fallbackDog.caption : null);
+      const categoryParam = params.get('category') || (idParam ? fallbackDog.category : null);
+
+      if (titleParam) {
+        document.getElementById('photo-title').textContent = titleParam;
+        document.title = titleParam + " - Dog Details";
+      }
+      if (srcParam) {
+        document.getElementById('photo-image').src = srcParam;
+        document.getElementById('photo-image').alt = titleParam || 'Photo view';
+      }
+      if (captionParam) {
+        document.getElementById('photo-caption').textContent = captionParam;
+      }
+      if (categoryParam) {
+        document.getElementById('photo-category').textContent = categoryParam;
+      }
+    </script>
+  </body>
+</html>
